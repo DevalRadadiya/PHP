@@ -1,0 +1,289 @@
+
+SQL> create table item
+  2  (
+  3  item_code varchar2(3) primary key,
+  4  item_name varchar2(10) not null,
+  5  price number(5) not null
+  6  );
+
+Table created.
+
+SQL> create table customer
+  2  (
+  3  c_no number(3),
+  4  c_nm varchar2(15) not null,
+  5  item_code varchar2(3) references item(item_code),
+  6  qty number(3) check(qty<=10)
+  7  );
+
+Table created.
+
+
+
+
+SQL> create table item
+  2  (
+  3  item_code varchar2(3) primary key,
+  4  item_name varchar2(10) not null,
+  5  price number(5) not null
+  6  );
+
+Table created.
+
+SQL> create table customer
+  2  (
+  3  c_no number(3),
+  4  c_nm varchar2(15) not null,
+  5  item_code varchar2(3) referances item(item_code),
+  6  qty number(3) check(qty<=10)
+  7  );
+item_code varchar2(3) referances item(item_code),
+                      *
+ERROR at line 5:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table customer
+  2  (
+  3  c_no number(3),
+  4  c_nm varchar2(15) not null,
+  5  item_code varchar2(3) references item(item_code),
+  6  qty number(3) check(qty<=10)
+  7  );
+
+Table created.
+
+SQL> insert into item values('S1','Soap',30);
+
+1 row created.
+
+SQL> insert into item values('S2','Shampoo',160);
+
+1 row created.
+
+SQL> insert into item values('B1','Biscuit',20);
+
+1 row created.
+
+SQL> insert into item values('C1','Chocolate',30);
+
+1 row created.
+
+SQL> insert into item values('C2','Cookies',50);
+
+1 row created.
+
+SQL> insert into customer values(101,'Mr.Shah','S1',5);
+
+1 row created.
+
+SQL> insert into customer values(101,'Mr.Shah','S2',8);
+
+1 row created.
+
+SQL> insert into customer values(102,'Mr.Bhatt','B1',7);
+SQL>
+SQL>  created.
+SQL>
+SQL> insert into customer values(102,'Mr.Bhatt','S1',10);
+SQL>
+SQL>  created.
+SQL>
+SQL> insert into customer values(103,'Mr.Patel','C2',5);
+SQL>
+SQL>  created.
+SQL>
+SQL> insert into customer values(104,'Mr.Desai','S2',10);
+SQL>
+SQL>  created.
+SQL>
+SQL> commit;
+SQL>
+SQL> t complete.
+SQL>
+SQL> select * from item;
+SQL>
+SQL> TEM_NAME       PRICE
+SQL> --------- ----------
+SQL> oap               30
+SQL> hampoo           160
+SQL> iscuit            20
+SQL> hocolate          30
+SQL> ookies            50
+SQL>
+SQL> select * from customer;
+SQL>
+SQL>  C_NO C_NM            ITE        QTY
+SQL> ----- --------------- --- ----------
+SQL>   101 Mr.Shah         S1           5
+SQL>   101 Mr.Shah         S2           8
+SQL>   102 Mr.Bhatt        B1           7
+SQL>   102 Mr.Bhatt        S1          10
+SQL>   103 Mr.Patel        C2           5
+SQL>   104 Mr.Desai        S2          10
+SQL>
+SQL> s selected.
+SQL>
+SQL> edit C:\Users\mahin\Pictures\prog1.txt
+SQL>
+SQL>
+SQL> @ C:\Users\mahin\Pictures\prog1.txt
+                dbms_output.put_line(itm.item_code||'   '||itm.item_nm||'            '||item.price);
+                                                               *
+ERROR at line 9:
+ORA-06550: line 9, column 48:
+PLS-00302: component 'ITEM_NM' must be declared
+ORA-06550: line 9, column 3:
+PL/SQL: Statement ignored
+
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ITEM_CODE                                 NOT NULL VARCHAR2(3)
+ ITEM_NAME                                 NOT NULL VARCHAR2(10)
+ PRICE                                     NOT NULL NUMBER(5)
+
+SQL> edit C:\Users\mahin\Pictures\prog1.txt
+
+SQL> @ C:\Users\mahin\Pictures\prog1.txt
+                dbms_output.put_line(itm.item_code||'   '||itm.item_name||'          '||item.price);
+                                                                                             *
+ERROR at line 9:
+ORA-06550: line 9, column 74:
+PLS-00357: Table,View Or Sequence reference 'ITEM.PRICE' not allowed in this
+context
+ORA-06550: line 9, column 3:
+PL/SQL: Statement ignored
+
+
+SQL> edit C:\Users\mahin\Pictures\prog1.txt
+
+SQL> @ C:\Users\mahin\Pictures\prog1.txt
+S1      Soap         30
+S2      Shampoo      160
+B1      Biscuit      20
+C1      Chocolate            30
+C2      Cookies      50
+
+PL/SQL procedure successfully completed.
+
+
+SQL> select * from item;
+
+ITE ITEM_NAME       PRICE
+--- ---------- ----------
+S1  Soap               30
+S2  Shampoo           160
+B1  Biscuit            20
+C1  Chocolate          30
+C2  Cookies            50
+
+SQL> select * from customer;
+
+      C_NO C_NM            ITE        QTY
+---------- --------------- --- ----------
+       101 Mr.Shah         S1           5
+       101 Mr.Shah         S2           8
+       102 Mr.Bhatt        B1           7
+       102 Mr.Bhatt        S1          10
+       103 Mr.Patel        C2           5
+       104 Mr.Desai        S2          10
+
+6 rows selected.
+
+
+SQL> select c_no,sum(price) from item,customer where item.item_code=customer.item_code group by c_no;
+
+      C_NO SUM(PRICE)
+---------- ----------
+       102         50
+       101        190
+       104        160
+       103         50
+
+SQL> select c_no,c_nm,sum(price) from item,customer where item.item_code=customer.item_code group by c_no,c_nm;
+
+      C_NO C_NM            SUM(PRICE)
+---------- --------------- ----------
+       102 Mr.Bhatt                50
+       103 Mr.Patel                50
+       104 Mr.Desai               160
+       101 Mr.Shah                190
+
+SQL> select * from customer where item_code=(select item_code from item where item_name='Soap');
+
+      C_NO C_NM            ITE        QTY
+---------- --------------- --- ----------
+       101 Mr.Shah         S1           5
+       102 Mr.Bhatt        S1          10
+
+SQL> select item.item_code,item_name,count(item.item_code) from customer,item where customer.item_code=item.item_code group by item.item_code,item_name;
+
+ITE ITEM_NAME  COUNT(ITEM.ITEM_CODE)
+--- ---------- ---------------------
+S1  Soap                           2
+B1  Biscuit                        1
+S2  Shampoo                        2
+C2  Cookies                        1
+
+SQL> select item.item_code,item_name,count(item.item_code) as No_Of_Item_Sell from customer,item where customer.item_code=item.item_code group by item.item_code,item_name;
+
+ITE ITEM_NAME  NO_OF_ITEM_SELL
+--- ---------- ---------------
+S1  Soap                     2
+B1  Biscuit                  1
+S2  Shampoo                  2
+C2  Cookies                  1
+
+SQL> select item.item_code,item_name,price from item,customer where item.item_code(+)=customer.item_code;
+
+ITE ITEM_NAME       PRICE
+--- ---------- ----------
+S1  Soap               30
+S1  Soap               30
+S2  Shampoo           160
+S2  Shampoo           160
+B1  Biscuit            20
+C2  Cookies            50
+
+6 rows selected.
+
+SQL> select item.item_code,item_name,price from item,customer where item.item_code(+)=customer.item_code group by item.item_code,item_name,price;
+
+ITE ITEM_NAME       PRICE
+--- ---------- ----------
+B1  Biscuit            20
+C2  Cookies            50
+S1  Soap               30
+S2  Shampoo           160
+
+SQL> select * from customer where item_code=(select item_code from customer where c_nm='Mr.Bhatt');
+select * from customer where item_code=(select item_code from customer where c_nm='Mr.Bhatt')
+                                        *
+ERROR at line 1:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> select * from customer where item_code in (select item_code from customer where c_nm='Mr.Bhatt');
+
+      C_NO C_NM            ITE        QTY
+---------- --------------- --- ----------
+       102 Mr.Bhatt        B1           7
+       102 Mr.Bhatt        S1          10
+       101 Mr.Shah         S1           5
+
+SQL> select c_nm,item_name,price from item,customer where item.item_code=customer.item_code group by item.item_code,item_name,price,c_nm;
+
+C_NM            ITEM_NAME       PRICE
+--------------- ---------- ----------
+Mr.Shah         Soap               30
+Mr.Bhatt        Biscuit            20
+Mr.Desai        Shampoo           160
+Mr.Shah         Shampoo           160
+Mr.Bhatt        Soap               30
+Mr.Patel        Cookies            50
+
+6 rows selected.
+
+SQL>

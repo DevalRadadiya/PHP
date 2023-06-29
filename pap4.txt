@@ -1,0 +1,488 @@
+SQL> create table customer
+  2  (
+  3  	c_no number(3) primary key,
+  4  	c_nm varchar2(15) not null,
+  5  	contact number(10),
+  6  	city varchar2(15) default('rajkot')
+  7  );
+create table customer
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> create table customer1
+  2  (
+  3  	c_no number(3) primary key,
+  4  	c_nm varchar2(15) not null,
+  5  	contact number(10),
+  6  	city varchar2(15) default('rajkot')
+  7  );
+
+Table created.
+
+SQL> create table bill
+  2  (
+  3  	bill_no number(2),
+  4  	c_no number(3) references customer1(c_no),
+  5  	pro_qty number(2) check (pro_qty>0n  and pro_qty<=50),
+  6  	bill_dt date not null
+  7  );
+	pro_qty number(2) check (pro_qty>0n  and pro_qty<=50),
+	                                  *
+ERROR at line 5:
+ORA-00907: missing right parenthesis 
+
+
+SQL> create table bill
+  2  (
+  3  	bill_no number(2),
+  4  	c_no number(3) references customer1(c_no),
+  5  	pro_qty number(2) check (pro_qty>0  and pro_qty<=50),
+  6  	bill_no number(2),
+  7  );
+	bill_no number(2),
+	*
+ERROR at line 6:
+ORA-00957: duplicate column name 
+
+
+SQL> create table bill
+  2  (
+  3  	bill_no number(2),
+  4  	c_no number(3) references customer1(c_no),
+  5  	pro_qty number(2) check (pro_qty>0 and pro_qty<=50),
+  6  	bill_dt date not null
+  7  );
+
+Table created.
+
+SQL> ed pa4.txt;
+
+SQL> @ pa4.txt;
+Enter value for no: 101
+old   2: 	no customer.c_no%type:='&no';
+new   2: 	no customer.c_no%type:='101';
+Enter value for nm: Mr.shah
+old   3: 	nm customer.c_nm%type:='&nm';
+new   3: 	nm customer.c_nm%type:='Mr.shah';
+Enter value for con: 9857463021
+old   4: 	con customer.contact%type:='&con';
+new   4: 	con customer.contact%type:='9857463021';
+Enter value for cit: Rajkot
+old   5: 	cit customer.city%type:='&cit';
+new   5: 	cit customer.city%type:='Rajkot';
+	con customer.contact%type:='9857463021';
+	             *
+ERROR at line 4:
+ORA-06550: line 4, column 15: 
+PLS-00302: component 'CONTACT' must be declared 
+ORA-06550: line 4, column 6: 
+PL/SQL: Item ignored 
+ORA-06550: line 5, column 15: 
+PLS-00302: component 'CITY' must be declared 
+ORA-06550: line 5, column 6: 
+PL/SQL: Item ignored 
+ORA-06550: line 7, column 40: 
+PLS-00320: the declaration of the type of this expression is incomplete or 
+malformed 
+ORA-06550: line 7, column 40: 
+PL/SQL: ORA-00904: "CIT": invalid identifier 
+ORA-06550: line 7, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed pa4.txt;
+
+SQL> @ pa4.txt;
+Enter value for no: 101
+old   2: 	no customer.c_no%type:=&no;
+new   2: 	no customer.c_no%type:=101;
+Enter value for nm: Mr.shah
+old   3: 	nm customer.c_nm%type:='&nm';
+new   3: 	nm customer.c_nm%type:='Mr.shah';
+Enter value for con: 9857463021
+old   4: 	con customer.contact%type:=&con;
+new   4: 	con customer.contact%type:=9857463021;
+Enter value for cit: Rajkot
+old   5: 	cit customer.city%type:='&cit';
+new   5: 	cit customer.city%type:='Rajkot';
+	con customer.contact%type:=9857463021;
+	             *
+ERROR at line 4:
+ORA-06550: line 4, column 15: 
+PLS-00302: component 'CONTACT' must be declared 
+ORA-06550: line 4, column 6: 
+PL/SQL: Item ignored 
+ORA-06550: line 5, column 15: 
+PLS-00302: component 'CITY' must be declared 
+ORA-06550: line 5, column 6: 
+PL/SQL: Item ignored 
+ORA-06550: line 7, column 40: 
+PLS-00320: the declaration of the type of this expression is incomplete or 
+malformed 
+ORA-06550: line 7, column 40: 
+PL/SQL: ORA-00904: "CIT": invalid identifier 
+ORA-06550: line 7, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed pa4.txt;
+
+SQL> @ pa4.txt;
+Enter value for ab: 101
+old   2: 	ab customer.c_no%type:=&ab;
+new   2: 	ab customer.c_no%type:=101;
+Enter value for cd: Mr.shah
+old   3: 	cd customer.c_nm%type:='&cd';
+new   3: 	cd customer.c_nm%type:='Mr.shah';
+Enter value for sa: 9857463021
+old   4: 	sa customer.contact%type:=&sa;
+new   4: 	sa customer.contact%type:=9857463021;
+Enter value for gh: Rajkot
+old   5: 	gh customer.city%type:='&gh';
+new   5: 	gh customer.city%type:='Rajkot';
+	sa customer.contact%type:=9857463021;
+	            *
+ERROR at line 4:
+ORA-06550: line 4, column 14: 
+PLS-00302: component 'CONTACT' must be declared 
+ORA-06550: line 4, column 5: 
+PL/SQL: Item ignored 
+ORA-06550: line 5, column 14: 
+PLS-00302: component 'CITY' must be declared 
+ORA-06550: line 5, column 5: 
+PL/SQL: Item ignored 
+ORA-06550: line 7, column 39: 
+PLS-00320: the declaration of the type of this expression is incomplete or 
+malformed 
+ORA-06550: line 7, column 39: 
+PL/SQL: ORA-00904: "GH": invalid identifier 
+ORA-06550: line 7, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed pa4.txt;
+
+SQL> @ pa4.txt;
+Enter value for ab: 101
+old   2: 	ab customer.c_no%type:=&ab;
+new   2: 	ab customer.c_no%type:=101;
+Enter value for cd: Mr.shah
+old   3: 	cd customer.c_nm%type:='&cd';
+new   3: 	cd customer.c_nm%type:='Mr.shah';
+Enter value for sa: 9857463021
+old   4: 	sa customer.contact%type:=&sa;
+new   4: 	sa customer.contact%type:=9857463021;
+Enter value for gh: Rajkot
+old   5: 	gh customer.city%type:='&gh';
+new   5: 	gh customer.city%type:='Rajkot';
+	sa customer.contact%type:=9857463021;
+	            *
+ERROR at line 4:
+ORA-06550: line 4, column 14: 
+PLS-00302: component 'CONTACT' must be declared 
+ORA-06550: line 4, column 5: 
+PL/SQL: Item ignored 
+ORA-06550: line 5, column 14: 
+PLS-00302: component 'CITY' must be declared 
+ORA-06550: line 5, column 5: 
+PL/SQL: Item ignored 
+ORA-06550: line 7, column 40: 
+PLS-00320: the declaration of the type of this expression is incomplete or 
+malformed 
+ORA-06550: line 7, column 40: 
+PL/SQL: ORA-00904: "GH": invalid identifier 
+ORA-06550: line 7, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed pa4.txt;
+
+SQL> @ pa4.txt;
+Enter value for ab: 101
+old   2: 	ab customer1.c_no%type:=&ab;
+new   2: 	ab customer1.c_no%type:=101;
+Enter value for cd: Mr.shah
+old   3: 	cd customer1.c_nm%type:='&cd';
+new   3: 	cd customer1.c_nm%type:='Mr.shah';
+Enter value for sa: 9857463021
+old   4: 	sa customer1.contact%type:=&sa;
+new   4: 	sa customer1.contact%type:=9857463021;
+Enter value for gh: Rajkot
+old   5: 	gh customer1.city%type:='&gh';
+new   5: 	gh customer1.city%type:='Rajkot';
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for ab: 102
+old   2: 	ab customer1.c_no%type:=&ab;
+new   2: 	ab customer1.c_no%type:=102;
+Enter value for cd: Mr.patel
+old   3: 	cd customer1.c_nm%type:='&cd';
+new   3: 	cd customer1.c_nm%type:='Mr.patel';
+Enter value for sa: 9630258741
+old   4: 	sa customer1.contact%type:=&sa;
+new   4: 	sa customer1.contact%type:=9630258741;
+Enter value for gh: Rajkot
+old   5: 	gh customer1.city%type:='&gh';
+new   5: 	gh customer1.city%type:='Rajkot';
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for ab: 103
+old   2: 	ab customer1.c_no%type:=&ab;
+new   2: 	ab customer1.c_no%type:=103;
+Enter value for cd: Mr.bhatt
+old   3: 	cd customer1.c_nm%type:='&cd';
+new   3: 	cd customer1.c_nm%type:='Mr.bhatt';
+Enter value for sa: 9874102563
+old   4: 	sa customer1.contact%type:=&sa;
+new   4: 	sa customer1.contact%type:=9874102563;
+Enter value for gh: Baroda
+old   5: 	gh customer1.city%type:='&gh';
+new   5: 	gh customer1.city%type:='Baroda';
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for ab: 104
+old   2: 	ab customer1.c_no%type:=&ab;
+new   2: 	ab customer1.c_no%type:=104;
+Enter value for cd: Mr.basu
+old   3: 	cd customer1.c_nm%type:='&cd';
+new   3: 	cd customer1.c_nm%type:='Mr.basu';
+Enter value for sa: 9512304876
+old   4: 	sa customer1.contact%type:=&sa;
+new   4: 	sa customer1.contact%type:=9512304876;
+Enter value for gh: Surat
+old   5: 	gh customer1.city%type:='&gh';
+new   5: 	gh customer1.city%type:='Surat';
+
+PL/SQL procedure successfully completed.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into bill values(&bill_no,&c);
+Enter value for bill_no: 
+Enter value for c: 
+old   1: insert into bill values(&bill_no,&c)
+new   1: insert into bill values(,)
+insert into bill values(,)
+                        *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> insert into bill values(&bill_no,&c_no,&pro_qty,'&bill_dt');
+Enter value for bill_no: 1
+Enter value for c_no: 101
+Enter value for pro_qty: 40
+Enter value for bill_dt: 1-oct-17
+old   1: insert into bill values(&bill_no,&c_no,&pro_qty,'&bill_dt')
+new   1: insert into bill values(1,101,40,'1-oct-17')
+
+1 row created.
+
+SQL> /
+Enter value for bill_no: 2
+Enter value for c_no: 102
+Enter value for pro_qty: 42
+Enter value for bill_dt: 5-oct-17
+old   1: insert into bill values(&bill_no,&c_no,&pro_qty,'&bill_dt')
+new   1: insert into bill values(2,102,42,'5-oct-17')
+
+1 row created.
+
+SQL> /
+Enter value for bill_no: 3
+Enter value for c_no: 103
+Enter value for pro_qty: 30
+Enter value for bill_dt: 5-sep-17
+old   1: insert into bill values(&bill_no,&c_no,&pro_qty,'&bill_dt')
+new   1: insert into bill values(3,103,30,'5-sep-17')
+
+1 row created.
+
+SQL> /
+Enter value for bill_no: 4
+Enter value for c_no: 104
+Enter value for pro_qty: 25
+Enter value for bill_dt: 6-oct-17
+old   1: insert into bill values(&bill_no,&c_no,&pro_qty,'&bill_dt')
+new   1: insert into bill values(4,104,25,'6-oct-17')
+
+1 row created.
+
+SQL> 5
+SP2-0226: Invalid line number 
+SQL> /
+Enter value for bill_no: 5
+Enter value for c_no: 101
+Enter value for pro_qty: 35
+Enter value for bill_dt: 9-aug-17
+old   1: insert into bill values(&bill_no,&c_no,&pro_qty,'&bill_dt')
+new   1: insert into bill values(5,101,35,'9-aug-17')
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select *customer1;
+select *customer1
+        *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> select *from customer1;
+
+      C_NO C_NM               CONTACT CITY                                      
+---------- --------------- ---------- ---------------                           
+       101 Mr.shah         9857463021 Rajkot                                    
+       102 Mr.patel        9630258741 Rajkot                                    
+       103 Mr.bhatt        9874102563 Baroda                                    
+       104 Mr.basu         9512304876 Surat                                     
+
+SQL> select *from bill;
+
+   BILL_NO       C_NO    PRO_QTY BILL_DT                                        
+---------- ---------- ---------- ---------                                      
+         1        101         40 01-OCT-17                                      
+         2        102         42 05-OCT-17                                      
+         3        103         30 05-SEP-17                                      
+         4        104         25 06-OCT-17                                      
+         5        101         35 09-AUG-17                                      
+
+SQL> select avg(pro_qty) from bill where extract(year from bill_dt);
+select avg(pro_qty) from bill where extract(year from bill_dt)
+                                                             *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> select avg(pro_qty) from bill where extract(year from bill_dt) from bill;
+select avg(pro_qty) from bill where extract(year from bill_dt) from bill
+                                                               *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> select avg(pro_qty) from bill where extract in(year from bill_dt) from bill;
+select avg(pro_qty) from bill where extract in(year from bill_dt) from bill
+                                                    *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> select avg(pro_qty) from bill where in(extract in(year from bill_dt) from bill);
+select avg(pro_qty) from bill where in(extract in(year from bill_dt) from bill)
+                                    *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select *from bill where c_no=(select c_no from customer where city='Rajkot');
+select *from bill where c_no=(select c_no from customer where city='Rajkot')
+                                                              *
+ERROR at line 1:
+ORA-00904: "CITY": invalid identifier 
+
+
+SQL> select *from bill where c_no=(select c_no from customer where city='Rajkot');
+select *from bill where c_no=(select c_no from customer where city='Rajkot')
+                                                              *
+ERROR at line 1:
+ORA-00904: "CITY": invalid identifier 
+
+
+SQL> select *from bill where c_no=(select c_no from customer1 where city='Rajkot');
+select *from bill where c_no=(select c_no from customer1 where city='Rajkot')
+                              *
+ERROR at line 1:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> select *from bill where c_no in(select c_no from customer1 where city='Rajkot');
+
+   BILL_NO       C_NO    PRO_QTY BILL_DT                                        
+---------- ---------- ---------- ---------                                      
+         1        101         40 01-OCT-17                                      
+         2        102         42 05-OCT-17                                      
+         5        101         35 09-AUG-17                                      
+
+SQL> select count(*) from customer distinct by c_no;
+select count(*) from customer distinct by c_no
+                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select count(*) from customer1 distinct c_no;
+select count(*) from customer1 distinct c_no
+                               *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select count(*) distinct c_no from customer;
+select count(*) distinct c_no from customer
+                *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> select distinct c_no count(*) from customer;
+select distinct c_no count(*) from customer
+                          *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> select count(*) from customer where in(select distinct c_no from customer);
+select count(*) from customer where in(select distinct c_no from customer)
+                                    *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select count(*) from customer where all(select distinct c_no from customer);
+select count(*) from customer where all(select distinct c_no from customer)
+                                    *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select count(*) from customer where in(select distinct c_no from customer1);
+select count(*) from customer where in(select distinct c_no from customer1)
+                                    *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select count(cn) from customer;
+select count(cn) from customer
+             *
+ERROR at line 1:
+ORA-00904: "CN": invalid identifier 
+
+
+SQL> select count(c_no) from customer;
+
+COUNT(C_NO)                                                                     
+-----------                                                                     
+          6                                                                     
+
+SQL> select count(distinct c_no) from customer;
+
+COUNT(DISTINCTC_NO)                                                             
+-------------------                                                             
+                  4                                                             
+
+SQL> spool off;
