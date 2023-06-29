@@ -1,0 +1,54 @@
+1. Write a Java program to print your name on Screen.
+
+2. Write a Java program to print table of 7.
+
+3. Write a Java program to calculate Fibonacci Series up to n numbers.
+
+4. Write a Java program to Print pascal triangle.
+
+5. Write a Java Program to Count the Number of Occurrence of an Element in an Array.
+
+6. Write a Java Program to Count the sum  of an Element in an Array.
+
+7. Write a Java Program to input Unit from the user and calculate Bill.
+                Unit                       charges per unit
+                0-100                     5.2
+                101-200                5.9
+                201-400                6.7
+                401-600                7.2
+                601-~                     7.6
+
+8. Write a Java Program to given discount on above program.
+      Bill Amount                             Discount
+       <500                                      30%
+       >500 - <1000                         20%
+       >1000 - ~                               15%
+      Maximum discount  Rs. 500
+
+9.   Factorial of a number using command-line arguments
+
+10. Print Simple Interest using command-line arguments
+
+11. Method overloading by changing number of arguments        void sum(int a, int b)
+        void sum(int a, int b, int c)
+
+12. Method overloading by changing data type of parameters
+         int sub( int x, int y)
+         double sub(double x, double y)
+
+13. Create one class named "Box" having three member variable named "double width, height, depth", create default and parameter  constructors and one method named " double volume()".
+
+
+
+=======================================
+<?php
+	$a=6;
+	$b=6;
+	function abc($x,$y=10)
+	{
+		$c=$x+$y;
+	//	return $c;
+	//	echo $c;
+	}
+	echo abc($a,$b);
+?>
